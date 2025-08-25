@@ -17,6 +17,10 @@ A tela do app nada mais é do que uma grande árvore de widgets que o Flutter mo
 
 Nosso plano é começar pequeno e ir passo a passo: primeiro com uma **lista fixa**, depois uma **lista dinâmica** e, por fim, evoluindo para um **modelo orientado a objetos**, deixando o app mais organizado e realista.
 
+
+Links úteis:
+* https://docs.flutter.dev/resources/architectural-overview
+
 ---
 
 ## 1) Estrutura básica do app
@@ -53,8 +57,297 @@ class MyHomePage extends StatelessWidget {
         ],
       ),
     );
+    Scaffold(
+    //   appBar: AppBar(title: const Text('My Home Page')),
+    //   body: const Center(child: Text('Conteúdo')),
+    //   drawer: const Drawer(child: Text('Menu')),
+    //   endDrawer: const Drawer(child: Text('Configurações')),
+    //   floatingActionButton: FloatingActionButton(
+    //     onPressed: () {
+    //       ScaffoldMessenger.of(context).showSnackBar(
+    //         const SnackBar(content: Text('Olá!')),
+    //       );
+    //     },
+    //     child: const Icon(Icons.add),
+    //   ),
+    //   floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+    //   bottomNavigationBar: const NavigationBar(
+    //     destinations: [
+    //       NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+    //       NavigationDestination(icon: Icon(Icons.person), label: 'Perfil'),
+    //     ],
+    //   ),
+    //   bottomSheet: Container(
+    //     height: 48,
+    //     alignment: Alignment.center,
+    //     child: const Text('Sheet persistente'),
+    //   ),
+    //   persistentFooterButtons: [
+    //     TextButton(onPressed: () {}, child: const Text('Cancelar')),
+    //     ElevatedButton(onPressed: () {}, child: const Text('Salvar')),
+    //   ],
+    //   backgroundColor: Colors.white,
+    //   extendBody: true,
+    //   extendBodyBehindAppBar: false,
+    //   resizeToAvoidBottomInset: true,
+    //   drawerScrimColor: Colors.black54,
+    //   onDrawerChanged: (isOpen) => debugPrint('Drawer aberto? $isOpen'),
+    // );
   }
 }
+
+class MyHomePage extends StatelessWidget {
+//   const MyHomePage({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: const Text('Planejador!')),
+//       body: Column(
+//         children: const [
+//           // ---------------------------------------------
+//           // 1) BARRAS DE PROGRESSO / STATUS
+//           // ---------------------------------------------
+//           // LinearProgressIndicator(), // indeterminado
+//           // LinearProgressIndicator(value: 0.35), // 35%
+//           // CircularProgressIndicator(), // indeterminado
+
+//           // ---------------------------------------------
+//           // 2) CAMPO DE ENTRADA + BOTÕES
+//           // ---------------------------------------------
+//           // Padding(
+//           //   padding: EdgeInsets.all(12),
+//           //   child: Row(
+//           //     children: [
+//           //       Expanded(
+//           //         child: TextField(
+//           //           decoration: InputDecoration(
+//           //             labelText: 'Nova tarefa',
+//           //             border: OutlineInputBorder(),
+//           //           ),
+//           //         ),
+//           //       ),
+//           //       SizedBox(width: 8),
+//           //       ElevatedButton(onPressed: null, child: Text('Adicionar')),
+//           //     ],
+//           //   ),
+//           // ),
+
+//           // ---------------------------------------------
+//           // 3) LISTA ROLÁVEL (LISTVIEW)
+//           // ---------------------------------------------
+//           // Expanded(
+//           //   child: ListView(
+//           //     children: [
+//           //       ListTile(title: Text('Item 1')),
+//           //       ListTile(title: Text('Item 2')),
+//           //     ],
+//           //   ),
+//           // ),
+
+//           // ---------------------------------------------
+//           // 4) GRID (GRIDVIEW)
+//           // ---------------------------------------------
+//           // Expanded(
+//           //   child: GridView.count(
+//           //     crossAxisCount: 2,
+//           //     children: [
+//           //       Card(child: Center(child: Text('A'))),
+//           //       Card(child: Center(child: Text('B'))),
+//           //     ],
+//           //   ),
+//           // ),
+
+//           // ---------------------------------------------
+//           // 5) STACK (SOBREPOSIÇÃO)
+//           // ---------------------------------------------
+//           // Expanded(
+//           //   child: Stack(
+//           //     children: [
+//           //       Positioned.fill(child: FlutterLogo()),
+//           //       Positioned(bottom: 16, right: 16, child: CircleAvatar(child: Icon(Icons.play_arrow))),
+//           //     ],
+//           //   ),
+//           // ),
+
+//           // ---------------------------------------------
+//           // 6) LAYOUTS COMUNS
+//           // ---------------------------------------------
+//           // SizedBox(height: 12),
+//           // Padding(padding: EdgeInsets.all(16), child: Text('Seção')),
+//           // Center(child: Text('Centralizado')),
+//           // Align(alignment: Alignment.centerRight, child: Text('À direita')),
+//           // Spacer(), // empurra os widgets acima para o topo
+
+//           // ---------------------------------------------
+//           // 7) CONTAINER / CARD
+//           // ---------------------------------------------
+//           // Card(
+//           //   margin: EdgeInsets.all(12),
+//           //   child: Padding(
+//           //     padding: EdgeInsets.all(16),
+//           //     child: Column(
+//           //       crossAxisAlignment: CrossAxisAlignment.start,
+//           //       children: [
+//           //         Text('Título', style: TextStyle(fontWeight: FontWeight.bold)),
+//           //         SizedBox(height: 8),
+//           //         Text('Descrição do cartão...'),
+//           //       ],
+//           //     ),
+//           //   ),
+//           // ),
+
+//           // ---------------------------------------------
+//           // 8) BOTÕES & MENUS
+//           // ---------------------------------------------
+//           // Wrap(
+//           //   spacing: 8,
+//           //   children: [
+//           //     ElevatedButton(onPressed: null, child: Text('OK')),
+//           //     OutlinedButton(onPressed: null, child: Text('Cancelar')),
+//           //     IconButton(onPressed: null, icon: Icon(Icons.settings)),
+//           //     PopupMenuButton<String>(
+//           //       itemBuilder: (context) => [
+//           //         PopupMenuItem(value: 'a', child: Text('Opção A')),
+//           //         PopupMenuItem(value: 'b', child: Text('Opção B')),
+//           //       ],
+//           //     ),
+//           //   ],
+//           // ),
+
+//           // ---------------------------------------------
+//           // 9) FORMULÁRIO (FORM + TEXTFORMFIELD)
+//           // ---------------------------------------------
+//           // Form(
+//           //   child: Padding(
+//           //     padding: EdgeInsets.all(16),
+//           //     child: Column(
+//           //       children: [
+//           //         TextFormField(decoration: InputDecoration(labelText: 'Nome')),
+//           //         SizedBox(height: 8),
+//           //         TextFormField(decoration: InputDecoration(labelText: 'Email')),
+//           //       ],
+//           //     ),
+//           //   ),
+//           // ),
+
+//           // ---------------------------------------------
+//           // 10) IMAGENS / ÍCONES
+//           // ---------------------------------------------
+//           // FlutterLogo(size: 72),
+//           // Icon(Icons.star, size: 32),
+//           // // Image.network('https://exemplo.com/imagem.png'),
+
+//           // ---------------------------------------------
+//           // 11) CONTEÚDO ASSÍNCRONO (FUTURE/STREAM)
+//           // ---------------------------------------------
+//           // Expanded(
+//           //   child: FutureBuilder<int>(
+//           //     future: Future.value(42),
+//           //     builder: (context, snapshot) {
+//           //       if (snapshot.connectionState != ConnectionState.done) {
+//           //         return Center(child: CircularProgressIndicator());
+//           //       }
+//           //       return Center(child: Text('Resultado: ${snapshot.data}'));
+//           //     },
+//           //   ),
+//           // ),
+//           // Expanded(
+//           //   child: StreamBuilder<DateTime>(
+//           //     stream: Stream<DateTime>.periodic(Duration(seconds: 1), (_) => DateTime.now()),
+//           //     builder: (context, snapshot) {
+//           //       return Center(child: Text(snapshot.data?.toIso8601String() ?? '...'));
+//           //     },
+//           //   ),
+//           // ),
+
+//           // ---------------------------------------------
+//           // 12) SLIVERS (CUSTOMSCROLLVIEW)
+//           // ---------------------------------------------
+//           // Expanded(
+//           //   child: CustomScrollView(
+//           //     slivers: [
+//           //       SliverAppBar(
+//           //         pinned: true,
+//           //         expandedHeight: 120,
+//           //         flexibleSpace: FlexibleSpaceBar(title: Text('Sliver')),
+//           //       ),
+//           //       SliverList(
+//           //         delegate: SliverChildBuilderDelegate(
+//           //           (context, index) => ListTile(title: Text('Item #$index')),
+//           //           childCount: 20,
+//           //         ),
+//           //       ),
+//           //     ],
+//           //   ),
+//           // ),
+
+//           // ---------------------------------------------
+//           // 13) LAYOUT RESPONSIVO (LAYOUTBUILDER)
+//           // ---------------------------------------------
+//           // LayoutBuilder(
+//           //   builder: (context, constraints) {
+//           //     final w = constraints.maxWidth;
+//           //     if (w < 400) {
+//           //       return Text('Layout compacto');
+//           //     }
+//           //     return Text('Layout amplo');
+//           //   },
+//           // ),
+
+//           // ---------------------------------------------
+//           // 14) GESTOS
+//           // ---------------------------------------------
+//           // InkWell(
+//           //   onTap: null,
+//           //   child: Padding(
+//           //     padding: EdgeInsets.all(16),
+//           //     child: Text('Clique aqui'),
+//           //   ),
+//           // ),
+
+//           // ---------------------------------------------
+//           // 15) ANIMAÇÃO SIMPLES
+//           // ---------------------------------------------
+//           // Expanded(
+//           //   child: Center(
+//           //     child: AnimatedContainer(
+//           //       duration: Duration(milliseconds: 300),
+//           //       width: 100,
+//           //       height: 100,
+//           //       decoration: BoxDecoration(
+//           //         borderRadius: BorderRadius.circular(16),
+//           //         color: Colors.blue,
+//           //       ),
+//           //     ),
+//           //   ),
+//           // ),
+
+//           // ---------------------------------------------
+//           // 16) NAVEGAÇÃO (PLACEHOLDER)
+//           // ---------------------------------------------
+//           // ElevatedButton(
+//           //   onPressed: null, // Navigator.of(context).push(...)
+//           //   child: Text('Ir para outra página'),
+//           // ),
+
+//           // ---------------------------------------------
+//           // 17) FEEDBACK (SNACKBAR / DIALOG) - PLACEHOLDERS
+//           // ---------------------------------------------
+//           // ElevatedButton(
+//           //   onPressed: null, // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Olá!')))
+//           //   child: Text('Mostrar SnackBar'),
+//           // ),
+//           // ElevatedButton(
+//           //   onPressed: null, // showDialog(context: context, builder: (_) => AlertDialog(title: Text('Título'), content: Text('Mensagem')))
+//           //   child: Text('Mostrar Dialog'),
+//           // ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
 ```
 
 **O que esse código faz:**
@@ -556,6 +849,7 @@ Pra isso, precisamos de **estado**.
 Adicione um campo `priority` na classe `Task`.
 
 Se a prioridade for **alta**, mostre um ícone 🔴; se for **baixa**, mostre um ícone 🟢 ao lado do texto da tarefa.
+
 
 
 
