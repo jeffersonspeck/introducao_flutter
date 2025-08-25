@@ -57,297 +57,8 @@ class MyHomePage extends StatelessWidget {
         ],
       ),
     );
-    // Scaffold(
-    //   appBar: AppBar(title: const Text('My Home Page')),
-    //   body: const Center(child: Text('Conteúdo')),
-    //   drawer: const Drawer(child: Text('Menu')),
-    //   endDrawer: const Drawer(child: Text('Configurações')),
-    //   floatingActionButton: FloatingActionButton(
-    //     onPressed: () {
-    //       ScaffoldMessenger.of(context).showSnackBar(
-    //         const SnackBar(content: Text('Olá!')),
-    //       );
-    //     },
-    //     child: const Icon(Icons.add),
-    //   ),
-    //   floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-    //   bottomNavigationBar: const NavigationBar(
-    //     destinations: [
-    //       NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-    //       NavigationDestination(icon: Icon(Icons.person), label: 'Perfil'),
-    //     ],
-    //   ),
-    //   bottomSheet: Container(
-    //     height: 48,
-    //     alignment: Alignment.center,
-    //     child: const Text('Sheet persistente'),
-    //   ),
-    //   persistentFooterButtons: [
-    //     TextButton(onPressed: () {}, child: const Text('Cancelar')),
-    //     ElevatedButton(onPressed: () {}, child: const Text('Salvar')),
-    //   ],
-    //   backgroundColor: Colors.white,
-    //   extendBody: true,
-    //   extendBodyBehindAppBar: false,
-    //   resizeToAvoidBottomInset: true,
-    //   drawerScrimColor: Colors.black54,
-    //   onDrawerChanged: (isOpen) => debugPrint('Drawer aberto? $isOpen'),
-    // );
   }
 }
-
-// class MyHomePage extends StatelessWidget {
-//   const MyHomePage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: const Text('Planejador!')),
-//       body: Column(
-//         children: const [
-//           // ---------------------------------------------
-//           // 1) BARRAS DE PROGRESSO / STATUS
-//           // ---------------------------------------------
-//           // LinearProgressIndicator(), // indeterminado
-//           // LinearProgressIndicator(value: 0.35), // 35%
-//           // CircularProgressIndicator(), // indeterminado
-
-//           // ---------------------------------------------
-//           // 2) CAMPO DE ENTRADA + BOTÕES
-//           // ---------------------------------------------
-//           // Padding(
-//           //   padding: EdgeInsets.all(12),
-//           //   child: Row(
-//           //     children: [
-//           //       Expanded(
-//           //         child: TextField(
-//           //           decoration: InputDecoration(
-//           //             labelText: 'Nova tarefa',
-//           //             border: OutlineInputBorder(),
-//           //           ),
-//           //         ),
-//           //       ),
-//           //       SizedBox(width: 8),
-//           //       ElevatedButton(onPressed: null, child: Text('Adicionar')),
-//           //     ],
-//           //   ),
-//           // ),
-
-//           // ---------------------------------------------
-//           // 3) LISTA ROLÁVEL (LISTVIEW)
-//           // ---------------------------------------------
-//           // Expanded(
-//           //   child: ListView(
-//           //     children: [
-//           //       ListTile(title: Text('Item 1')),
-//           //       ListTile(title: Text('Item 2')),
-//           //     ],
-//           //   ),
-//           // ),
-
-//           // ---------------------------------------------
-//           // 4) GRID (GRIDVIEW)
-//           // ---------------------------------------------
-//           // Expanded(
-//           //   child: GridView.count(
-//           //     crossAxisCount: 2,
-//           //     children: [
-//           //       Card(child: Center(child: Text('A'))),
-//           //       Card(child: Center(child: Text('B'))),
-//           //     ],
-//           //   ),
-//           // ),
-
-//           // ---------------------------------------------
-//           // 5) STACK (SOBREPOSIÇÃO)
-//           // ---------------------------------------------
-//           // Expanded(
-//           //   child: Stack(
-//           //     children: [
-//           //       Positioned.fill(child: FlutterLogo()),
-//           //       Positioned(bottom: 16, right: 16, child: CircleAvatar(child: Icon(Icons.play_arrow))),
-//           //     ],
-//           //   ),
-//           // ),
-
-//           // ---------------------------------------------
-//           // 6) LAYOUTS COMUNS
-//           // ---------------------------------------------
-//           // SizedBox(height: 12),
-//           // Padding(padding: EdgeInsets.all(16), child: Text('Seção')),
-//           // Center(child: Text('Centralizado')),
-//           // Align(alignment: Alignment.centerRight, child: Text('À direita')),
-//           // Spacer(), // empurra os widgets acima para o topo
-
-//           // ---------------------------------------------
-//           // 7) CONTAINER / CARD
-//           // ---------------------------------------------
-//           // Card(
-//           //   margin: EdgeInsets.all(12),
-//           //   child: Padding(
-//           //     padding: EdgeInsets.all(16),
-//           //     child: Column(
-//           //       crossAxisAlignment: CrossAxisAlignment.start,
-//           //       children: [
-//           //         Text('Título', style: TextStyle(fontWeight: FontWeight.bold)),
-//           //         SizedBox(height: 8),
-//           //         Text('Descrição do cartão...'),
-//           //       ],
-//           //     ),
-//           //   ),
-//           // ),
-
-//           // ---------------------------------------------
-//           // 8) BOTÕES & MENUS
-//           // ---------------------------------------------
-//           // Wrap(
-//           //   spacing: 8,
-//           //   children: [
-//           //     ElevatedButton(onPressed: null, child: Text('OK')),
-//           //     OutlinedButton(onPressed: null, child: Text('Cancelar')),
-//           //     IconButton(onPressed: null, icon: Icon(Icons.settings)),
-//           //     PopupMenuButton<String>(
-//           //       itemBuilder: (context) => [
-//           //         PopupMenuItem(value: 'a', child: Text('Opção A')),
-//           //         PopupMenuItem(value: 'b', child: Text('Opção B')),
-//           //       ],
-//           //     ),
-//           //   ],
-//           // ),
-
-//           // ---------------------------------------------
-//           // 9) FORMULÁRIO (FORM + TEXTFORMFIELD)
-//           // ---------------------------------------------
-//           // Form(
-//           //   child: Padding(
-//           //     padding: EdgeInsets.all(16),
-//           //     child: Column(
-//           //       children: [
-//           //         TextFormField(decoration: InputDecoration(labelText: 'Nome')),
-//           //         SizedBox(height: 8),
-//           //         TextFormField(decoration: InputDecoration(labelText: 'Email')),
-//           //       ],
-//           //     ),
-//           //   ),
-//           // ),
-
-//           // ---------------------------------------------
-//           // 10) IMAGENS / ÍCONES
-//           // ---------------------------------------------
-//           // FlutterLogo(size: 72),
-//           // Icon(Icons.star, size: 32),
-//           // // Image.network('https://exemplo.com/imagem.png'),
-
-//           // ---------------------------------------------
-//           // 11) CONTEÚDO ASSÍNCRONO (FUTURE/STREAM)
-//           // ---------------------------------------------
-//           // Expanded(
-//           //   child: FutureBuilder<int>(
-//           //     future: Future.value(42),
-//           //     builder: (context, snapshot) {
-//           //       if (snapshot.connectionState != ConnectionState.done) {
-//           //         return Center(child: CircularProgressIndicator());
-//           //       }
-//           //       return Center(child: Text('Resultado: ${snapshot.data}'));
-//           //     },
-//           //   ),
-//           // ),
-//           // Expanded(
-//           //   child: StreamBuilder<DateTime>(
-//           //     stream: Stream<DateTime>.periodic(Duration(seconds: 1), (_) => DateTime.now()),
-//           //     builder: (context, snapshot) {
-//           //       return Center(child: Text(snapshot.data?.toIso8601String() ?? '...'));
-//           //     },
-//           //   ),
-//           // ),
-
-//           // ---------------------------------------------
-//           // 12) SLIVERS (CUSTOMSCROLLVIEW)
-//           // ---------------------------------------------
-//           // Expanded(
-//           //   child: CustomScrollView(
-//           //     slivers: [
-//           //       SliverAppBar(
-//           //         pinned: true,
-//           //         expandedHeight: 120,
-//           //         flexibleSpace: FlexibleSpaceBar(title: Text('Sliver')),
-//           //       ),
-//           //       SliverList(
-//           //         delegate: SliverChildBuilderDelegate(
-//           //           (context, index) => ListTile(title: Text('Item #$index')),
-//           //           childCount: 20,
-//           //         ),
-//           //       ),
-//           //     ],
-//           //   ),
-//           // ),
-
-//           // ---------------------------------------------
-//           // 13) LAYOUT RESPONSIVO (LAYOUTBUILDER)
-//           // ---------------------------------------------
-//           // LayoutBuilder(
-//           //   builder: (context, constraints) {
-//           //     final w = constraints.maxWidth;
-//           //     if (w < 400) {
-//           //       return Text('Layout compacto');
-//           //     }
-//           //     return Text('Layout amplo');
-//           //   },
-//           // ),
-
-//           // ---------------------------------------------
-//           // 14) GESTOS
-//           // ---------------------------------------------
-//           // InkWell(
-//           //   onTap: null,
-//           //   child: Padding(
-//           //     padding: EdgeInsets.all(16),
-//           //     child: Text('Clique aqui'),
-//           //   ),
-//           // ),
-
-//           // ---------------------------------------------
-//           // 15) ANIMAÇÃO SIMPLES
-//           // ---------------------------------------------
-//           // Expanded(
-//           //   child: Center(
-//           //     child: AnimatedContainer(
-//           //       duration: Duration(milliseconds: 300),
-//           //       width: 100,
-//           //       height: 100,
-//           //       decoration: BoxDecoration(
-//           //         borderRadius: BorderRadius.circular(16),
-//           //         color: Colors.blue,
-//           //       ),
-//           //     ),
-//           //   ),
-//           // ),
-
-//           // ---------------------------------------------
-//           // 16) NAVEGAÇÃO (PLACEHOLDER)
-//           // ---------------------------------------------
-//           // ElevatedButton(
-//           //   onPressed: null, // Navigator.of(context).push(...)
-//           //   child: Text('Ir para outra página'),
-//           // ),
-
-//           // ---------------------------------------------
-//           // 17) FEEDBACK (SNACKBAR / DIALOG) - PLACEHOLDERS
-//           // ---------------------------------------------
-//           // ElevatedButton(
-//           //   onPressed: null, // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Olá!')))
-//           //   child: Text('Mostrar SnackBar'),
-//           // ),
-//           // ElevatedButton(
-//           //   onPressed: null, // showDialog(context: context, builder: (_) => AlertDialog(title: Text('Título'), content: Text('Mensagem')))
-//           //   child: Text('Mostrar Dialog'),
-//           // ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 ```
 
 **O que esse código faz:**
@@ -358,6 +69,437 @@ class MyHomePage extends StatelessWidget {
 * **`Scaffold`** → funciona como um “esqueleto” da tela, fornecendo estrutura pronta para AppBar (barra superior), body (conteúdo principal), botões flutuantes etc.
 
 **Hora do teste:** rode o código e você deve ver uma tela com a barra de título azul na parte superior e o texto do AppBar. O resto da tela ainda está vazio — e é aí que vamos começar a colocar nossos widgets.
+
+### Códigos Extras (Brinque e aprenda)
+
+No `Scaffold`, além de `appBar` e `body`, você tem vários “slots” e ajustes úteis. Os mais usados:
+
+**Navegação e ações**
+
+* `drawer` / `endDrawer`: menus laterais (esquerda/direita).
+* `floatingActionButton`: botão de ação flutuante.
+* `floatingActionButtonLocation` / `floatingActionButtonAnimator`: posição e animação do FAB.
+* `bottomNavigationBar`: barra de navegação inferior (ex.: `NavigationBar`, `BottomNavigationBar`).
+* `bottomSheet`: sheet **persistente** preso ao rodapé (para modal, use `showModalBottomSheet`).
+* `persistentFooterButtons`: botões fixos no rodapé (ex.: “Salvar”, “Cancelar”).
+
+**Aparência e layout**
+
+* `backgroundColor`: cor de fundo do conteúdo.
+* `extendBody`: estende o corpo por trás da barra inferior (transparências).
+* `extendBodyBehindAppBar`: conteúdo por trás da AppBar (útil com imagens hero/cover).
+* `resizeToAvoidBottomInset`: controla se o layout “sobe” ao abrir o teclado.
+
+**Gavetas (drawers) – comportamento**
+
+* `drawerScrimColor`: cor do “véu” ao abrir o drawer.
+* `drawerEdgeDragWidth`: largura da borda sensível ao gesto de abrir.
+* `drawerEnableOpenDragGesture` / `endDrawerEnableOpenDragGesture`: habilita/desabilita gesto.
+* `onDrawerChanged` / `onEndDrawerChanged`: callback ao abrir/fechar.
+
+**Restauração/estado**
+
+* `restorationId`: integra com restauração de estado (restoration APIs).
+
+**Métodos úteis (via estado/mensageiro)**
+
+* `ScaffoldMessenger.of(context).showSnackBar(...)`: mostrar SnackBar.
+* `Scaffold.of(context).openDrawer()` / `openEndDrawer()`: abrir gavetas por código.
+* `Scaffold.of(context).showBottomSheet(...)`: abrir bottom sheet persistente.
+
+Exemplo compacto juntando vários:
+
+```dart
+Scaffold(
+  appBar: AppBar(title: const Text('My Home Page')),
+  body: const Center(child: Text('Conteúdo')),
+  drawer: const Drawer(child: Text('Menu')),
+  endDrawer: const Drawer(child: Text('Configurações')),
+  floatingActionButton: FloatingActionButton(
+    onPressed: () {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Olá!')),
+      );
+    },
+    child: const Icon(Icons.add),
+  ),
+  floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+  bottomNavigationBar: const NavigationBar(
+    destinations: [
+      NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+      NavigationDestination(icon: Icon(Icons.person), label: 'Perfil'),
+    ],
+  ),
+  bottomSheet: Container(
+    height: 48,
+    alignment: Alignment.center,
+    child: const Text('Sheet persistente'),
+  ),
+  persistentFooterButtons: [
+    TextButton(onPressed: () {}, child: const Text('Cancelar')),
+    ElevatedButton(onPressed: () {}, child: const Text('Salvar')),
+  ],
+  backgroundColor: Colors.white,
+  extendBody: true,
+  extendBodyBehindAppBar: false,
+  resizeToAvoidBottomInset: true,
+  drawerScrimColor: Colors.black54,
+  onDrawerChanged: (isOpen) => debugPrint('Drawer aberto? $isOpen'),
+);
+```
+
+O próximo código é um **playground**: dentro do `Scaffold` há uma `Column` com **17 blocos comentados** que mostram padrões comuns de interface no Flutter. A ideia é **descomentar um bloco por vez** para ver o comportamento e entender **quando usar** cada componente.
+
+> Dica importante: muitos blocos contêm widgets **não-const** (`TextField`, `ListView`, etc.). Quando você descomentar algo assim, **remova o `const`** da lista: troque
+> `children: const [ ... ]` → `children: [ ... ]`.
+> Blocos com rolagem (ListView/Grid/CustomScrollView) **já vêm dentro de `Expanded`** para evitar erro de “unbounded height”.
+
+## Estrutura do app
+
+* `main()` → roda `MyApp`.
+* `MyApp` → configura `MaterialApp` (título/tema) e define a tela inicial (`home`).
+* `MyHomePage` → constrói o `Scaffold` com `AppBar` e um `body` contendo os **blocos de estudo**.
+
+## Como usar os blocos
+
+1. Descomente **apenas um bloco** (ou alguns compatíveis) por vez.
+2. Se o bloco tiver widgets não-const, remova o `const` dos `children`.
+3. Para blocos de lista, grid, slivers ou animações em área central, **mantenha o `Expanded`** que já está no exemplo.
+4. Para testar SnackBar/Dialog/Navigation, substitua os `onPressed: null` por callbacks reais.
+
+## O que cada seção demonstra (1–17)
+
+1. **Barras de progresso**
+   `LinearProgressIndicator` e `CircularProgressIndicator`, em modo **indeterminado** (carregando) ou com **valor** (0.0–1.0).
+
+2. **Entrada + botões**
+   `TextField` com `OutlineInputBorder` e `ElevatedButton`. Padrão de **form control + ação**.
+
+3. **Lista rolável (ListView)**
+   `ListView` com `ListTile`. Use para **listas verticais** extensas; precisa estar contido (ex.: `Expanded`).
+
+4. **Grade (GridView)**
+   `GridView.count` para **grades simples** (ícones, cards). Controle por `crossAxisCount`.
+
+5. **Sobreposição (Stack)**
+   `Stack` + `Positioned` para **flutuar elementos** (ex.: botão flutuante sobre imagem).
+
+6. **Layouts utilitários**
+   `SizedBox`, `Padding`, `Center`, `Align`, `Spacer`. Tijolinhos de **espaçamento e alinhamento**.
+
+7. **Container/Card + tipografia**
+   `Card` com `Padding` e `Column`. Bom para **caixas de conteúdo** com título e descrição.
+
+8. **Botões & menus**
+   `ElevatedButton`, `OutlinedButton`, `IconButton`, `PopupMenuButton`. Demonstra **ações primárias/secundárias** e **menus de contexto**.
+
+9. **Formulário (Form + TextFormField)**
+   Estrutura base para **validação** e **salvamento** de dados. Ideal para telas de cadastro.
+
+10. **Imagens/Ícones**
+    `FlutterLogo`, `Icon`, e espaço para `Image.network(...)`. Mostra **recursos visuais** básicos.
+
+11. **Assíncrono (Future/Stream)**
+    `FutureBuilder` (resultado único) e `StreamBuilder` (atualizações contínuas). Essenciais para **dados assíncronos**.
+
+12. **Slivers (CustomScrollView)**
+    `SliverAppBar` com `SliverList`. Base para telas com **AppBar colapsável** e listas de alta performance.
+
+13. **Responsividade (LayoutBuilder)**
+    Adapta o conteúdo conforme `constraints.maxWidth`. Útil para **layout adaptativo** (mobile/tablet/web).
+
+14. **Gestos**
+    `InkWell` com `onTap`. Fornece **feedback visual** e detecção de toques.
+
+15. **Animação simples**
+    `AnimatedContainer` (tamanho/cor/borda com `duration`). Porta de entrada para **animações declarativas**.
+
+16. **Navegação (placeholder)**
+    `Navigator.of(context).push(...)` para ir a outra página. Mostra o ponto de **integração com rotas**.
+
+17. **Feedback (SnackBar/Dialog)**
+    Como exibir `SnackBar` via `ScaffoldMessenger` e `AlertDialog` com `showDialog`. **Mensagens ao usuário**.
+
+## Boas práticas e pegadinhas
+
+* **Unbounded height**: Listas/grades dentro de `Column` **precisam** de `Expanded` (já incluído).
+* **`const` na lista**: se descomentar widgets dinâmicos, **remova o `const`** em `children`.
+* **Estados**: este exemplo é `StatelessWidget`; para entrada de dados real, troque para `StatefulWidget` (controladores, `setState`).
+* **Acessibilidade**: prefira `TextButton/OutlinedButton/ElevatedButton` em vez de `GestureDetector` puro, e sempre defina rótulos claros.
+* **Temas**: centralize cores/tipografia em `ThemeData` para consistência.
+
+Com isso, você tem um **catálogo prático** para demonstrar os principais blocos de UI no Flutter e discutir quando e por que escolher cada padrão.
+
+```dart
+import 'package:flutter/material.dart';
+
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'TO-DO!',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Planejador!')),
+      body: Column(
+        children: const [
+          // ---------------------------------------------
+          // 1) BARRAS DE PROGRESSO / STATUS
+          // ---------------------------------------------
+          // LinearProgressIndicator(), // indeterminado
+          // LinearProgressIndicator(value: 0.35), // 35%
+          // CircularProgressIndicator(), // indeterminado
+
+          // ---------------------------------------------
+          // 2) CAMPO DE ENTRADA + BOTÕES
+          // ---------------------------------------------
+          // Padding(
+          //   padding: EdgeInsets.all(12),
+          //   child: Row(
+          //     children: [
+          //       Expanded(
+          //         child: TextField(
+          //           decoration: InputDecoration(
+          //             labelText: 'Nova tarefa',
+          //             border: OutlineInputBorder(),
+          //           ),
+          //         ),
+          //       ),
+          //       SizedBox(width: 8),
+          //       ElevatedButton(onPressed: null, child: Text('Adicionar')),
+          //     ],
+          //   ),
+          // ),
+
+          // ---------------------------------------------
+          // 3) LISTA ROLÁVEL (LISTVIEW)
+          // ---------------------------------------------
+          // Expanded(
+          //   child: ListView(
+          //     children: [
+          //       ListTile(title: Text('Item 1')),
+          //       ListTile(title: Text('Item 2')),
+          //     ],
+          //   ),
+          // ),
+
+          // ---------------------------------------------
+          // 4) GRID (GRIDVIEW)
+          // ---------------------------------------------
+          // Expanded(
+          //   child: GridView.count(
+          //     crossAxisCount: 2,
+          //     children: [
+          //       Card(child: Center(child: Text('A'))),
+          //       Card(child: Center(child: Text('B'))),
+          //     ],
+          //   ),
+          // ),
+
+          // ---------------------------------------------
+          // 5) STACK (SOBREPOSIÇÃO)
+          // ---------------------------------------------
+          // Expanded(
+          //   child: Stack(
+          //     children: [
+          //       Positioned.fill(child: FlutterLogo()),
+          //       Positioned(bottom: 16, right: 16, child: CircleAvatar(child: Icon(Icons.play_arrow))),
+          //     ],
+          //   ),
+          // ),
+
+          // ---------------------------------------------
+          // 6) LAYOUTS COMUNS
+          // ---------------------------------------------
+          // SizedBox(height: 12),
+          // Padding(padding: EdgeInsets.all(16), child: Text('Seção')),
+          // Center(child: Text('Centralizado')),
+          // Align(alignment: Alignment.centerRight, child: Text('À direita')),
+          // Spacer(), // empurra os widgets acima para o topo
+
+          // ---------------------------------------------
+          // 7) CONTAINER / CARD
+          // ---------------------------------------------
+          // Card(
+          //   margin: EdgeInsets.all(12),
+          //   child: Padding(
+          //     padding: EdgeInsets.all(16),
+          //     child: Column(
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: [
+          //         Text('Título', style: TextStyle(fontWeight: FontWeight.bold)),
+          //         SizedBox(height: 8),
+          //         Text('Descrição do cartão...'),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+
+          // ---------------------------------------------
+          // 8) BOTÕES & MENUS
+          // ---------------------------------------------
+          // Wrap(
+          //   spacing: 8,
+          //   children: [
+          //     ElevatedButton(onPressed: null, child: Text('OK')),
+          //     OutlinedButton(onPressed: null, child: Text('Cancelar')),
+          //     IconButton(onPressed: null, icon: Icon(Icons.settings)),
+          //     PopupMenuButton<String>(
+          //       itemBuilder: (context) => [
+          //         PopupMenuItem(value: 'a', child: Text('Opção A')),
+          //         PopupMenuItem(value: 'b', child: Text('Opção B')),
+          //       ],
+          //     ),
+          //   ],
+          // ),
+
+          // ---------------------------------------------
+          // 9) FORMULÁRIO (FORM + TEXTFORMFIELD)
+          // ---------------------------------------------
+          // Form(
+          //   child: Padding(
+          //     padding: EdgeInsets.all(16),
+          //     child: Column(
+          //       children: [
+          //         TextFormField(decoration: InputDecoration(labelText: 'Nome')),
+          //         SizedBox(height: 8),
+          //         TextFormField(decoration: InputDecoration(labelText: 'Email')),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+
+          // ---------------------------------------------
+          // 10) IMAGENS / ÍCONES
+          // ---------------------------------------------
+          // FlutterLogo(size: 72),
+          // Icon(Icons.star, size: 32),
+          // // Image.network('https://exemplo.com/imagem.png'),
+
+          // ---------------------------------------------
+          // 11) CONTEÚDO ASSÍNCRONO (FUTURE/STREAM)
+          // ---------------------------------------------
+          // Expanded(
+          //   child: FutureBuilder<int>(
+          //     future: Future.value(42),
+          //     builder: (context, snapshot) {
+          //       if (snapshot.connectionState != ConnectionState.done) {
+          //         return Center(child: CircularProgressIndicator());
+          //       }
+          //       return Center(child: Text('Resultado: ${snapshot.data}'));
+          //     },
+          //   ),
+          // ),
+          // Expanded(
+          //   child: StreamBuilder<DateTime>(
+          //     stream: Stream<DateTime>.periodic(Duration(seconds: 1), (_) => DateTime.now()),
+          //     builder: (context, snapshot) {
+          //       return Center(child: Text(snapshot.data?.toIso8601String() ?? '...'));
+          //     },
+          //   ),
+          // ),
+
+          // ---------------------------------------------
+          // 12) SLIVERS (CUSTOMSCROLLVIEW)
+          // ---------------------------------------------
+          // Expanded(
+          //   child: CustomScrollView(
+          //     slivers: [
+          //       SliverAppBar(
+          //         pinned: true,
+          //         expandedHeight: 120,
+          //         flexibleSpace: FlexibleSpaceBar(title: Text('Sliver')),
+          //       ),
+          //       SliverList(
+          //         delegate: SliverChildBuilderDelegate(
+          //           (context, index) => ListTile(title: Text('Item #$index')),
+          //           childCount: 20,
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+
+          // ---------------------------------------------
+          // 13) LAYOUT RESPONSIVO (LAYOUTBUILDER)
+          // ---------------------------------------------
+          // LayoutBuilder(
+          //   builder: (context, constraints) {
+          //     final w = constraints.maxWidth;
+          //     if (w < 400) {
+          //       return Text('Layout compacto');
+          //     }
+          //     return Text('Layout amplo');
+          //   },
+          // ),
+
+          // ---------------------------------------------
+          // 14) GESTOS
+          // ---------------------------------------------
+          // InkWell(
+          //   onTap: null,
+          //   child: Padding(
+          //     padding: EdgeInsets.all(16),
+          //     child: Text('Clique aqui'),
+          //   ),
+          // ),
+
+          // ---------------------------------------------
+          // 15) ANIMAÇÃO SIMPLES
+          // ---------------------------------------------
+          // Expanded(
+          //   child: Center(
+          //     child: AnimatedContainer(
+          //       duration: Duration(milliseconds: 300),
+          //       width: 100,
+          //       height: 100,
+          //       decoration: BoxDecoration(
+          //         borderRadius: BorderRadius.circular(16),
+          //         color: Colors.blue,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+
+          // ---------------------------------------------
+          // 16) NAVEGAÇÃO (PLACEHOLDER)
+          // ---------------------------------------------
+          // ElevatedButton(
+          //   onPressed: null, // Navigator.of(context).push(...)
+          //   child: Text('Ir para outra página'),
+          // ),
+
+          // ---------------------------------------------
+          // 17) FEEDBACK (SNACKBAR / DIALOG) - PLACEHOLDERS
+          // ---------------------------------------------
+          // ElevatedButton(
+          //   onPressed: null, // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Olá!')))
+          //   child: Text('Mostrar SnackBar'),
+          // ),
+          // ElevatedButton(
+          //   onPressed: null, // showDialog(context: context, builder: (_) => AlertDialog(title: Text('Título'), content: Text('Mensagem')))
+          //   child: Text('Mostrar Dialog'),
+          // ),
+        ],
+      ),
+    );
+  }
+}
+```
 
 ---
 
@@ -849,8 +991,3 @@ Pra isso, precisamos de **estado**.
 Adicione um campo `priority` na classe `Task`.
 
 Se a prioridade for **alta**, mostre um ícone 🔴; se for **baixa**, mostre um ícone 🟢 ao lado do texto da tarefa.
-
-
-
-
-
