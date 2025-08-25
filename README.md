@@ -57,7 +57,7 @@ class MyHomePage extends StatelessWidget {
         ],
       ),
     );
-    Scaffold(
+    // Scaffold(
     //   appBar: AppBar(title: const Text('My Home Page')),
     //   body: const Center(child: Text('Conteúdo')),
     //   drawer: const Drawer(child: Text('Menu')),
@@ -96,7 +96,7 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+// class MyHomePage extends StatelessWidget {
 //   const MyHomePage({super.key});
 
 //   @override
@@ -849,6 +849,7 @@ Pra isso, precisamos de **estado**.
 Adicione um campo `priority` na classe `Task`.
 
 Se a prioridade for **alta**, mostre um ícone 🔴; se for **baixa**, mostre um ícone 🟢 ao lado do texto da tarefa.
+
 
 
 
