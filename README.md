@@ -150,24 +150,18 @@ Scaffold(
 
 O próximo código é um **playground**: dentro do `Scaffold` há uma `Column` com **17 blocos comentados** que mostram padrões comuns de interface no Flutter. A ideia é **descomentar um bloco por vez** para ver o comportamento e entender **quando usar** cada componente.
 
-> Dica importante: muitos blocos contêm widgets **não-const** (`TextField`, `ListView`, etc.). Quando você descomentar algo assim, **remova o `const`** da lista: troque
+Dica importante: muitos blocos contêm widgets **não-const** (`TextField`, `ListView`, etc.). Quando você descomentar algo assim, **remova o `const`** da lista: troque
 > `children: const [ ... ]` → `children: [ ... ]`.
-> Blocos com rolagem (ListView/Grid/CustomScrollView) **já vêm dentro de `Expanded`** para evitar erro de “unbounded height”.
+Blocos com rolagem (ListView/Grid/CustomScrollView) **já vêm dentro de `Expanded`** para evitar erro de “unbounded height”.
 
-## Estrutura do app
-
-* `main()` → roda `MyApp`.
-* `MyApp` → configura `MaterialApp` (título/tema) e define a tela inicial (`home`).
-* `MyHomePage` → constrói o `Scaffold` com `AppBar` e um `body` contendo os **blocos de estudo**.
-
-## Como usar os blocos
+### Como usar os blocos
 
 1. Descomente **apenas um bloco** (ou alguns compatíveis) por vez.
 2. Se o bloco tiver widgets não-const, remova o `const` dos `children`.
 3. Para blocos de lista, grid, slivers ou animações em área central, **mantenha o `Expanded`** que já está no exemplo.
 4. Para testar SnackBar/Dialog/Navigation, substitua os `onPressed: null` por callbacks reais.
 
-## O que cada seção demonstra (1–17)
+### O que cada seção demonstra (1–17)
 
 1. **Barras de progresso**
    `LinearProgressIndicator` e `CircularProgressIndicator`, em modo **indeterminado** (carregando) ou com **valor** (0.0–1.0).
@@ -991,3 +985,4 @@ Pra isso, precisamos de **estado**.
 Adicione um campo `priority` na classe `Task`.
 
 Se a prioridade for **alta**, mostre um ícone 🔴; se for **baixa**, mostre um ícone 🟢 ao lado do texto da tarefa.
+
