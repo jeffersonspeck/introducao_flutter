@@ -224,6 +224,18 @@ Pra isso, precisamos de **estado**.
   }
   ```
 
+**O que foi feito neste passo (lista dinâmica):**
+
+* A lista de tarefas deixou de ser **fixa** dentro do `TaskList` e passou a ser criada no **pai** (`MyHomePage.build`) como `tasks`.
+* O `TaskList` agora **recebe os dados por construtor** e apenas **renderiza** o que chegar — separando **dados** (no pai) de **apresentação** (no filho).
+* Foi necessário **remover o `const`** do `children: [...]` porque `TaskList(tasks: tasks)` depende de um **valor dinâmico** (variável), e listas `const` só aceitam expressões constantes.
+* Benefícios: **desacoplamento**, **reuso** do componente, e base pronta para evoluir de `List<String>` para `List<Task>` e, depois, permitir **adicionar/remover** itens quando o pai virar **Stateful** (com `setState`).
+* Em resumo: o `TaskList` parou de “saber” as tarefas de antemão; ele virou um **componente declarativo** que recebe dados e mostra.
+
+---
+
+## 5) Criando um objeto `Task`
+
 ### ➜ Evolução (passo 4 → 5): o que sai / entra / onde mudar
 
 * **Onde:** criar modelo OO e trocar tipos.
@@ -266,9 +278,27 @@ Pra isso, precisamos de **estado**.
     }
   }
   ```
+
+**O que foi feito neste passo (lista dinâmica):**
+
+* A lista de tarefas deixou de ser **fixa** dentro do `TaskList` e passou a ser criada no **pai** (`MyHomePage.build`) como `tasks`.
+* O `TaskList` agora **recebe os dados por construtor** e apenas **renderiza** o que chegar — separando **dados** (no pai) de **apresentação** (no filho).
+* Foi necessário **remover o `const`** do `children: [...]` porque `TaskList(tasks: tasks)` depende de um **valor dinâmico** (variável), e listas `const` só aceitam expressões constantes.
+* Benefícios: **desacoplamento**, **reuso** do componente, e base pronta para evoluir de `List<String>` para `List<Task>` e, depois, permitir **adicionar/remover** itens quando o pai virar **Stateful** (com `setState`).
+* Em resumo: o `TaskList` parou de “saber” as tarefas de antemão; ele virou um **componente declarativo** que recebe dados e mostra.
+
+
+**Notas da evolução (lista dinâmica)**
+
+* A lista de tarefas deixou de ser fixa dentro do `TaskList` e passou a ser criada no pai (`MyHomePage.build`) como `tasks`.
+* O `TaskList` passou a receber esses dados pelo construtor e apenas renderizá-los, separando **dados** (no pai) de **apresentação** (no filho).
+* Foi necessário remover o `const` do `children: [...]` porque agora há um valor **dinâmico** sendo usado (`tasks`); listas `const` só aceitam expressões constantes, e manter o `const` causaria o erro “Not a constant expression”.
+* Benefícios: **desacoplamento**, **reuso** do componente e base pronta para evoluir para `List<Task>` e, depois, para um fluxo interativo (com `StatefulWidget` e `setState` para adicionar/remover itens).
+* Em resumo: o `TaskList` deixou de “saber” quais tarefas existem e virou um componente **declarativo**, que recebe dados do pai e os mostra.
+
 ---
 
-## 5) Criando um objeto `Task`
+## 6) Adicionando `Task`
 
 * **Onde:** `MyHomePage` vira **Stateful** e ganha `TextEditingController` + `_addTask`.
 * **Sai:** `MyHomePage extends StatelessWidget`.
@@ -394,7 +424,7 @@ Pra isso, precisamos de **estado**.
 
 ---
 
-## 6) Estado no pai
+## 7) Estado no pai
 
 ### ➜ Evolução (6 final): progresso dinâmico, `ListView`, FAB “Ver marcadas” e polimentos
 
@@ -490,10 +520,30 @@ Pra isso, precisamos de **estado**.
        }
      }
      ```
+**O que aconteceu neste passo (“Adicionando `Task`”):**
+
+* **`MyHomePage` virou `StatefulWidget`** para **guardar o estado real da tela**: a lista de tarefas (`List<Task>`) e o campo de texto. Assim, o pai passa a ser a **fonte única da verdade** dos dados.
+* **Criamos um `TextEditingController`** para ler o texto digitado no `TextField` e **fizemos o ciclo de vida correto**: inicialização implícita no construtor e **descartar em `dispose()`** para evitar vazamento de memória.
+* **Entrou o método `_addTask()`**: ele lê o texto, valida (ignora vazio), **cria uma nova `Task`** e adiciona na lista **chamando `setState`** — isso dispara o rebuild e a nova tarefa aparece na hora.
+* **O `TaskList` ganhou um callback `onToggle`**: agora ele não altera nada por conta própria; quando o usuário marca/desmarca uma tarefa, ele **pede** ao pai (via `onToggle`) para mudar `isDone`. O pai atualiza o modelo e reconstrói.
+* **`TaskItem` passou a ser *declarativo* e `Stateless`**: em vez de ter estado interno, ele **recebe** `label`, `value` e `onChanged`. O item só **exibe** e **emite eventos**; quem decide o novo estado é o pai.
+  *Isso é o padrão “**levantar o estado**” (lifting state up): estado no ancestral comum, filhos “burros” e previsíveis.*
+* **Fluxo de dados ficou unidirecional e claro**:
+  Pai (dados) ➜ Filhos (props) ➜ Usuário interage ➜ Filhos emitem evento ➜ Pai atualiza estado com `setState` ➜ UI reconstrói.
+* **Consequências visíveis na UI**:
+  1. Apareceu uma **linha de input** (campo + botão) para adicionar novas tarefas.
+  2. A **lista** agora reflete o modelo (`List<Task>`) e **reage** às ações do usuário (marcar/desmarcar).
+
+* **Boas práticas reforçadas**:
+  * **Separação de responsabilidades**: pai gerencia dados; filhos apenas exibem/acionam callbacks.
+  * **Ciclo de vida**: sempre **descartar controllers** em `dispose()`.
+  * **Previsibilidade**: com componentes puros (stateless), fica mais fácil **testar** e **manter**.
+* **Por que isso importa?**
+  Esse desenho facilita crescer o app (prioridade, prazo, filtros, persistência), reduz bugs de sincronização e prepara o terreno para arquiteturas mais robustas (Provider/Riverpod/BLoC) sem mudar a ideia central: **um lugar único com o estado e componentes declarativos em volta**.
 
 ---
 
-## 7) Finalizando
+## 8) Finalizando
 
 **O que conseguimos aprender e praticar até aqui:**
 
@@ -506,5 +556,6 @@ Pra isso, precisamos de **estado**.
 Adicione um campo `priority` na classe `Task`.
 
 Se a prioridade for **alta**, mostre um ícone 🔴; se for **baixa**, mostre um ícone 🟢 ao lado do texto da tarefa.
+
 
 
