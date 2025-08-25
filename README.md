@@ -66,6 +66,10 @@ class MyHomePage extends StatelessWidget {
 
 **Hora do teste:** rode o código e você deve ver uma tela com a barra de título azul na parte superior e o texto do AppBar. O resto da tela ainda está vazio — e é aí que vamos começar a colocar nossos widgets.
 
+---
+
+## 2) Criando widgets fixos
+
 ### ➜ Evolução (passo 1 → 2): o que sai / entra / onde mudar
 
 * **Onde:** `MyHomePage.build`.
@@ -84,10 +88,6 @@ class MyHomePage extends StatelessWidget {
     ),
     ```
   * **Adicione** ao final do arquivo as classes `Progress`, `TaskList` e `TaskItem` (ver passo 2).
-
----
-
-## 2) Criando widgets fixos
 
 Agora dá pra adicionar duas partes:
 
@@ -131,6 +131,10 @@ class TaskList extends StatelessWidget {
 
 Essa parte é importante porque mostra como o Flutter mistura **conteúdo** (`Text`, `ProgressBar`) com **layout** (`Column`) para montar a interface.
 
+---
+
+## 3) Criando um item com estado
+
 ### ➜ Evolução (passo 2 → 3): o que sai / entra / onde mudar
 
 * **Onde:** fim do arquivo (criação do `TaskItem`).
@@ -164,10 +168,6 @@ Essa parte é importante porque mostra como o Flutter mistura **conteúdo** (`Te
   }
   ```
 
----
-
-## 3) Criando um item com estado
-
 Agora sim: cada tarefa vai ter uma caixinha de marcar.
 Pra isso, precisamos de **estado**.
 
@@ -178,6 +178,10 @@ Pra isso, precisamos de **estado**.
 * **`widget.label`** → como o texto vem da classe `TaskItem` (pai), a classe de estado acessa esse valor usando `widget.label`. É assim que o `State` consegue enxergar os dados imutáveis do seu widget.
 
 **Dica rápida:** tente trocar o `Row` por um `ListTile`. O `ListTile` já tem suporte a `leading` (ícone ou checkbox) e `title` (texto), deixando o código mais limpo e visualmente mais organizado.
+
+---
+
+## 4) Passando uma lista dinâmica
 
 ### ➜ Evolução (passo 3 → 4): o que sai / entra / onde mudar
 
@@ -219,10 +223,6 @@ Pra isso, precisamos de **estado**.
     }
   }
   ```
-
----
-
-## 4) Passando uma lista dinâmica
 
 ### ➜ Evolução (passo 4 → 5): o que sai / entra / onde mudar
 
@@ -266,7 +266,6 @@ Pra isso, precisamos de **estado**.
     }
   }
   ```
-
 ---
 
 ## 5) Criando um objeto `Task`
@@ -507,4 +506,5 @@ Pra isso, precisamos de **estado**.
 Adicione um campo `priority` na classe `Task`.
 
 Se a prioridade for **alta**, mostre um ícone 🔴; se for **baixa**, mostre um ícone 🟢 ao lado do texto da tarefa.
+
 
