@@ -81,7 +81,7 @@ class MyHomePage extends StatelessWidget {
         Progress(),
         TaskList(),
       ],
-    );
+    ),
     ```
   * **Adicione** ao final do arquivo as classes `Progress`, `TaskList` e `TaskItem` (ver passo 2).
 
@@ -507,3 +507,4 @@ Pra isso, precisamos de **estado**.
 Adicione um campo `priority` na classe `Task`.
 
 Se a prioridade for **alta**, mostre um ícone 🔴; se for **baixa**, mostre um ícone 🟢 ao lado do texto da tarefa.
+
