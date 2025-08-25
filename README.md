@@ -50,8 +50,6 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(title: const Text('Planejador!')),
       body: Column(
         children: const [
-          Progress(),
-          TaskList(),
         ],
       ),
     );
@@ -67,6 +65,25 @@ class MyHomePage extends StatelessWidget {
 * **`Scaffold`** → funciona como um “esqueleto” da tela, fornecendo estrutura pronta para AppBar (barra superior), body (conteúdo principal), botões flutuantes etc.
 
 **Hora do teste:** rode o código e você deve ver uma tela com a barra de título azul na parte superior e o texto do AppBar. O resto da tela ainda está vazio — e é aí que vamos começar a colocar nossos widgets.
+
+### ➜ Evolução (passo 1 → 2): o que sai / entra / onde mudar
+
+* **Onde:** `MyHomePage.build`.
+* **Sai:** nada (vamos apenas **adicionar** widgets).
+* **Entra:** `Progress` e `TaskList` no `body`.
+* **Ação:**
+
+  * Se a lista `children` estiver diferente, **substitua** por:
+
+    ```dart
+    body: Column(
+      children: const [
+        Progress(),
+        TaskList(),
+      ],
+    );
+    ```
+  * **Adicione** ao final do arquivo as classes `Progress`, `TaskList` e `TaskItem` (ver passo 2).
 
 ---
 
@@ -114,38 +131,45 @@ class TaskList extends StatelessWidget {
 
 Essa parte é importante porque mostra como o Flutter mistura **conteúdo** (`Text`, `ProgressBar`) com **layout** (`Column`) para montar a interface.
 
+### ➜ Evolução (passo 2 → 3): o que sai / entra / onde mudar
+
+* **Onde:** fim do arquivo (criação do `TaskItem`).
+* **Sai:** nada.
+* **Entra:** `TaskItem` como **Stateful** (com checkbox).
+* **Ação:** **cole** abaixo de `TaskList`:
+
+  ```dart
+  class TaskItem extends StatefulWidget {
+    final String label;
+    const TaskItem({super.key, required this.label});
+    @override
+    _TaskItemState createState() => _TaskItemState();
+  }
+
+  class _TaskItemState extends State<TaskItem> {
+    bool? _value = false;
+
+    @override
+    Widget build(BuildContext context) {
+      return Row(
+        children: [
+          Checkbox(
+            value: _value,
+            onChanged: (newValue) => setState(() => _value = newValue),
+          ),
+          Text(widget.label),
+        ],
+      );
+    }
+  }
+  ```
+
 ---
 
 ## 3) Criando um item com estado
 
 Agora sim: cada tarefa vai ter uma caixinha de marcar.
 Pra isso, precisamos de **estado**.
-
-```dart
-class TaskItem extends StatefulWidget {
-  final String label;
-  const TaskItem({super.key, required this.label});
-  @override
-  _TaskItemState createState() => _TaskItemState();
-}
-
-class _TaskItemState extends State<TaskItem> {
-  bool? _value = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Checkbox(
-          value: _value,
-          onChanged: (newValue) => setState(() => _value = newValue),
-        ),
-        Text(widget.label),
-      ],
-    );
-  }
-}
-```
 
 **O que está rolando aqui:**
 
@@ -155,349 +179,318 @@ class _TaskItemState extends State<TaskItem> {
 
 **Dica rápida:** tente trocar o `Row` por um `ListTile`. O `ListTile` já tem suporte a `leading` (ícone ou checkbox) e `title` (texto), deixando o código mais limpo e visualmente mais organizado.
 
+### ➜ Evolução (passo 3 → 4): o que sai / entra / onde mudar
+
+* **Onde:** `MyHomePage.build`.
+* **Sai:** lista fixa dentro de `TaskList`.
+* **Entra:** `List<String> tasks` criada no `build` e passada para `TaskList`.
+* **Ação:**
+
+  1. **Declare** no topo do `build`:
+
+  ```dart
+  final tasks = <String>[
+    'Printar piadas',
+    'Enviar memes',
+  ];
+  ```
+
+  2. **Troque** o `children: const [...]` por:
+
+  ```dart
+  children: [
+    const Progress(),
+    TaskList(tasks: tasks),
+  ],
+  ```
+
+  3. **Atualize** `TaskList` para receber `List<String>`:
+
+  ```dart
+  class TaskList extends StatelessWidget {
+    final List<String> tasks;
+    const TaskList({super.key, required this.tasks});
+
+    @override
+    Widget build(BuildContext context) {
+      return Column(
+        children: tasks.map((label) => TaskItem(label: label)).toList(),
+      );
+    }
+  }
+  ```
+
 ---
 
 ## 4) Passando uma lista dinâmica
 
-Ao invés de escrever tarefa por tarefa na mão, bora criar uma lista e passar pro `TaskList`.
+### ➜ Evolução (passo 4 → 5): o que sai / entra / onde mudar
 
-```dart
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+* **Onde:** criar modelo OO e trocar tipos.
+* **Sai:** `List<String>`.
+* **Entra:** classe `Task` + `List<Task>`.
+* **Ação:**
 
-  @override
-  Widget build(BuildContext context) {
-    final tasks = <String>[
-      'Printar piadas',
-      'Enviar memes',
-    ];
-    return Scaffold(
-      appBar: AppBar(title: const Text('Planejador!')),
-      body: Column(
-        children: [
-          const Progress(),
-          TaskList(tasks: tasks),
-        ],
-      ),
-    );
+  1. **Adicione** a classe:
+
+  ```dart
+  class Task {
+    final String label;
+    bool isDone;
+    Task({required this.label, this.isDone = false});
   }
-}
+  ```
 
-class TaskList extends StatelessWidget {
-  final List<String> tasks;
-  const TaskList({super.key, required this.tasks});
+  2. **Substitua** no `build`:
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: tasks.map((label) => TaskItem(label: label)).toList(),
-    );
+  ```dart
+  final tasks = <Task>[
+    Task(label: 'Printar piadocas'),
+    Task(label: 'enviar memes'),
+    Task(label: 'Adicionar'),
+  ];
+  ```
+
+  3. **Atualize** `TaskList` para aceitar `List<Task>`:
+
+  ```dart
+  class TaskList extends StatelessWidget {
+    final List<Task> tasks;
+    const TaskList({super.key, required this.tasks});
+
+    @override
+    Widget build(BuildContext context) {
+      return Column(
+        children: tasks.map((t) => TaskItem(label: t.label)).toList(),
+      );
+    }
   }
-}
-```
-
-**O que mudou nesse passo:**
-
-* Agora temos uma lista chamada **`tasks`** dentro do `MyHomePage`. Em vez de escrever cada tarefa na mão, colocamos todas dentro dessa lista.
-* Essa lista é enviada para o **`TaskList`** pelo construtor. Ou seja, o `TaskList` não sabe mais “de cor” quais tarefas existem, ele recebe os dados prontos de fora.
-* Dentro do **`TaskList`**, cada string da lista é transformada em um **`TaskItem`** usando o `.map()`. Isso faz com que o widget crie automaticamente os itens da tela com base nos dados.
-
-Com essa mudança, a lista deixou de ser fixa e virou **flexível**: se você adicionar ou remover um item da lista `tasks`, a interface se adapta sozinha, sem precisar mexer no layout manualmente.
+  ```
 
 ---
 
 ## 5) Criando um objeto `Task`
 
-Hora de trazer **Orientação a Objetos** pra cena: vamos modelar uma tarefa como classe.
+* **Onde:** `MyHomePage` vira **Stateful** e ganha `TextEditingController` + `_addTask`.
+* **Sai:** `MyHomePage extends StatelessWidget`.
+* **Entra:** `MyHomePage extends StatefulWidget` + `_MyHomePageState`.
+* **Ação (substituição completa do widget):**
 
-```dart
-class Task {
-  final String label;
-  bool isDone;
-  Task({required this.label, this.isDone = false});
-}
-```
+  ```dart
+  class MyHomePage extends StatefulWidget {
+    const MyHomePage({super.key});
+    @override
+    State<MyHomePage> createState() => _MyHomePageState();
+  }
 
-E no `MyHomePage`:
+  class _MyHomePageState extends State<MyHomePage> {
+    final List<Task> tasks = [
+      Task(label: 'Teste item objeto'),
+      Task(label: 'Coisas'),
+    ];
+    final TextEditingController _controller = TextEditingController();
 
-```dart
-final tasks = <Task>[
-  Task(label: 'Printar piadocas'),
-  Task(label: 'enviar memes'),
-  Task(label: 'Adicionar'),
-];
-```
+    void _addTask() {
+      final text = _controller.text.trim();
+      if (text.isEmpty) return;
+      setState(() {
+        tasks.add(Task(label: text));
+        _controller.clear();
+      });
+    }
 
-**Por que isso é legal:**
+    @override
+    void dispose() {
+      _controller.dispose();
+      super.dispose();
+    }
 
-* Antes cada tarefa era só um **texto**. Agora, com a classe `Task`, cada item tem também um **estado** (`isDone`) que diz se está concluído ou não.
-* Com um objeto próprio, fica muito mais fácil **evoluir**: podemos adicionar campos como `priority` (prioridade da tarefa), `deadline` (prazo), `notes` (observações) ou até `assignedTo` (quem vai executar).
-* Essa é a parte de **Orientação a Objetos** entrando em cena: em vez de espalhar dados soltos, criamos uma **estrutura organizada** que representa melhor a realidade.
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Planejador')),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _controller,
+                      decoration: const InputDecoration(
+                        labelText: 'Nova tarefa',
+                        border: OutlineInputBorder(),
+                      ),
+                      onSubmitted: (_) => _addTask(),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  ElevatedButton(
+                    onPressed: _addTask,
+                    child: const Text('Adicionar'),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: TaskList(
+                tasks: tasks,
+                onToggle: (task, v) => setState(() => task.isDone = v ?? false),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+  ```
 
-Em outras palavras: agora nossas tarefas não são apenas “strings” jogadas, mas **objetos completos** que carregam informação e podem crescer conforme a necessidade do app.
+* **Atualize `TaskList`** para aceitar `onToggle` (vamos centralizar o estado no próximo passo):
 
+  ```dart
+  class TaskList extends StatelessWidget {
+    final List<Task> tasks;
+    final void Function(Task, bool?) onToggle;
+    const TaskList({super.key, required this.tasks, required this.onToggle});
 
-Boa! 🚀 O **input de texto** que adiciona uma nova tarefa dinamicamente se encaixa **logo depois do passo 5 (criando objeto `Task`)**.
+    @override
+    Widget build(BuildContext context) {
+      return Column(
+        children: tasks
+            .map((t) => TaskItem(
+                  label: t.label,
+                  value: t.isDone,
+                  onChanged: (v) => onToggle(t, v),
+                ))
+            .toList(),
+      );
+    }
+  }
+  ```
 
-Isso porque:
+* **Troque `TaskItem`** para **Stateless** e declarativo:
 
-* No passo 5 você já tem o modelo de objeto (`Task`).
-* O próximo passo natural é deixar de ter só a lista fixa no código e permitir que o usuário **digite uma nova tarefa**, que entra nessa lista como um novo objeto.
-* Depois disso, você já pode evoluir para o passo 6 (centralizando o estado e progresso).
+  ```dart
+  class TaskItem extends StatelessWidget {
+    final String label;
+    final bool value;
+    final ValueChanged<bool?> onChanged;
+    const TaskItem({
+      super.key,
+      required this.label,
+      required this.value,
+      required this.onChanged,
+    });
+    @override
+    Widget build(BuildContext context) {
+      return ListTile(
+        leading: Checkbox(value: value, onChanged: onChanged),
+        title: Text(label),
+        onTap: () => onChanged(!value),
+      );
+    }
+  }
+  ```
 
 ---
 
-**5.1) – Adicionando tarefas pelo usuário**
+## 6) Estado no pai
 
-```dart
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+### ➜ Evolução (6 final): progresso dinâmico, `ListView`, FAB “Ver marcadas” e polimentos
 
-class _MyHomePageState extends State<MyHomePage> {
-  final List<Task> tasks = [
-    Task(label: 'Teste item objeto'),
-    Task(label: 'Coisas'),
-  ];
+* **Onde:** `_MyHomePageState`, `Progress`, `TaskList`.
+* **Sai:** `TaskList` com `Column`.
+* **Entra:** `TaskList` com `ListView.builder`, `Progress(value)`, cálculo de `progress`, `_showChecked`, FAB estendido.
+* **Ação (trocas pontuais):**
 
-  final TextEditingController _controller = TextEditingController();
+  1. **Em `_MyHomePageState`**, adicione:
 
-  void _addTask() {
-    final text = _controller.text.trim();
-    if (text.isEmpty) return;
-    setState(() {
-      tasks.add(Task(label: text));
-      _controller.clear();
-    });
-  }
+     ```dart
+     double get progress {
+       if (tasks.isEmpty) return 0.0;
+       return tasks.where((t) => t.isDone).length / tasks.length;
+     }
 
-  @override
-  void dispose() {
-    _controller.dispose(); // boa prática: descartar o controller
-    super.dispose();
-  }
+     void _showChecked() {
+       final checked = tasks.where((t) => t.isDone).map((t) => '• ${t.label}').toList();
+       final content = checked.isEmpty ? 'Nenhuma tarefa marcada.' : checked.join('\n');
+       showDialog(
+         context: context,
+         builder: (_) => AlertDialog(
+           title: const Text('Tarefas marcadas'),
+           content: Text(content),
+           actions: [
+             TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('OK')),
+           ],
+         ),
+       );
+     }
+     ```
+  2. **No `build`**, antes do input:
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Planejador')),
-      body: Column(
-        children: [
-          // input + botão
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: const InputDecoration(
-                      labelText: 'Nova tarefa',
-                      border: OutlineInputBorder(),
-                    ),
-                    onSubmitted: (_) => _addTask(),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: _addTask,
-                  child: const Text('Adicionar'),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: TaskList(
-              tasks: tasks,
-              onToggle: (task, v) => setState(() => task.isDone = v ?? false),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-```
+     ```dart
+     Progress(value: progress),
+     const SizedBox(height: 12),
+     ```
+  3. **No `Scaffold`**, adicione o FAB:
 
-**O que mudou agora:**
+     ```dart
+     floatingActionButton: FloatingActionButton.extended(
+       onPressed: _showChecked,
+       icon: const Icon(Icons.list),
+       label: const Text('Ver marcadas'),
+     ),
+     ```
+  4. **Troque `TaskList`** para `ListView.builder`:
 
-* Adicionamos um **TextField** para que o usuário possa digitar o nome da nova tarefa.
-* Criamos um botão **Adicionar**, que chama o método `_addTask()` sempre que clicado (ou quando o usuário aperta *Enter* no campo).
-* Esse método lê o texto digitado, cria um **novo objeto `Task`** e insere dentro da lista de tarefas.
-* Chamamos `setState` para avisar o Flutter que houve mudança; assim, a interface é reconstruída e a nova tarefa aparece imediatamente na tela.
-* Também incluímos a chamada a `dispose()` para descartar o controller quando a tela for destruída — uma boa prática que evita vazamentos de memória.
+     ```dart
+     class TaskList extends StatelessWidget {
+       final List<Task> tasks;
+       final void Function(Task, bool?) onToggle;
+       const TaskList({super.key, required this.tasks, required this.onToggle});
 
-Com isso, o app deixa de depender de uma lista fixa no código e passa a ser **interativo**: o próprio usuário pode criar quantas tarefas quiser, tornando a aplicação dinâmica e realista.
+       @override
+       Widget build(BuildContext context) {
+         return ListView.builder(
+           itemCount: tasks.length,
+           itemBuilder: (context, index) {
+             final t = tasks[index];
+             return TaskItem(
+               label: t.label,
+               value: t.isDone,
+               onChanged: (v) => onToggle(t, v),
+             );
+           },
+         );
+       }
+     }
+     ```
+  5. **Substitua `Progress`** por uma versão com percentual:
 
----
+     ```dart
+     class Progress extends StatelessWidget {
+       final double value;
+       const Progress({super.key, required this.value});
 
-## 6) Estado no pai (versão mais organizada)
-
-**Pra fechar, a gente centraliza tudo:**
-
-* O **`MyHomePage`** agora vira um **`StatefulWidget`**, porque é nele que vamos guardar o estado de verdade.
-* A **lista de tarefas** e também o **cálculo do progresso** ficam dentro dele — ou seja, o pai é o dono dos dados.
-* O **`TaskItem`** deixa de cuidar do próprio estado: ele só mostra o que recebeu (`value`) e avisa quando algo muda (`onChanged`). Assim, cada alteração volta para o pai, que atualiza a lista.
-* No fim, colocamos um **botão flutuante** para mostrar quais tarefas foram marcadas, deixando o app mais interativo.
-
-Com isso, o fluxo fica claro:
-**Estado no pai → Pai passa dados pros filhos → Filhos avisam quando algo muda → Pai atualiza e reconstrói a tela.**
-
-É exatamente assim que o Flutter recomenda organizar os apps: simples, previsível e fácil de manter.
-
-```dart
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  final tasks = <Task>[
-    Task(label: 'Teste de aula'),
-    Task(label: 'limpar banheiro'),
-  ];
-
-  // controller do input
-  final TextEditingController _controller = TextEditingController();
-
-  // adiciona nova Task usando o texto digitado
-  void _addTask() {
-    final text = _controller.text.trim();
-    if (text.isEmpty) return;
-    setState(() {
-      tasks.add(Task(label: text));
-      _controller.clear();
-    });
-  }
-
-  // progresso com proteção para lista vazia
-  double get progress {
-    if (tasks.isEmpty) return 0.0;
-    return tasks.where((t) => t.isDone).length / tasks.length;
-  }
-
-  void _showChecked() {
-    final checked = tasks.where((t) => t.isDone).map((t) => t.label).toList();
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: const Text('Tarefas marcadas'),
-        content: Text(checked.isEmpty ? 'Nenhuma' : checked.join('\n')),
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose(); // boa prática
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Space Exploration Planner!')),
-      body: Column(
-        children: [
-          // barra de progresso dinâmica
-          Progress(value: progress),
-
-          // input + botão adicionar
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: const InputDecoration(
-                      labelText: 'Nova tarefa',
-                      hintText: 'Digite a descrição...',
-                      border: OutlineInputBorder(),
-                    ),
-                    onSubmitted: (_) => _addTask(),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton.icon(
-                  onPressed: _addTask,
-                  icon: const Icon(Icons.add),
-                  label: const Text('Adicionar'),
-                ),
-              ],
-            ),
-          ),
-
-          // lista de tarefas rolável
-          Expanded(
-            child: TaskList(
-              tasks: tasks,
-              onToggle: (task, v) => setState(() => task.isDone = v ?? false),
-            ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showChecked,
-        child: const Icon(Icons.list),
-      ),
-    );
-  }
-}
-
-class Progress extends StatelessWidget {
-  final double value;
-  const Progress({super.key, required this.value});
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: LinearProgressIndicator(value: value),
-    );
-  }
-}
-
-class TaskList extends StatelessWidget {
-  final List<Task> tasks;
-  final void Function(Task, bool?) onToggle;
-  const TaskList({super.key, required this.tasks, required this.onToggle});
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: tasks
-          .map((t) => TaskItem(
-                label: t.label,
-                value: t.isDone,
-                onChanged: (v) => onToggle(t, v),
-              ))
-          .toList(),
-    );
-  }
-}
-
-class TaskItem extends StatelessWidget {
-  final String label;
-  final bool value;
-  final ValueChanged<bool?> onChanged;
-  const TaskItem({
-    super.key,
-    required this.label,
-    required this.value,
-    required this.onChanged,
-  });
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: Checkbox(value: value, onChanged: onChanged),
-      title: Text(label),
-      onTap: () => onChanged(!value), // toque alterna o status
-    );
-  }
-}
-```
+       @override
+       Widget build(BuildContext context) {
+         return Padding(
+           padding: const EdgeInsets.all(16.0),
+           child: Column(
+             crossAxisAlignment: CrossAxisAlignment.start,
+             children: [
+               const Text('Percentual concluído:'),
+               const SizedBox(height: 8),
+               LinearProgressIndicator(value: value.clamp(0.0, 1.0)),
+               const SizedBox(height: 4),
+               Text('${(value * 100).toStringAsFixed(0)}% concluído'),
+             ],
+           ),
+         );
+       }
+     }
+     ```
 
 ---
 
@@ -512,4 +505,5 @@ class TaskItem extends StatelessWidget {
 
 **Desafio extra:**
 Adicione um campo `priority` na classe `Task`.
+
 Se a prioridade for **alta**, mostre um ícone 🔴; se for **baixa**, mostre um ícone 🟢 ao lado do texto da tarefa.
